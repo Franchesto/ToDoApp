@@ -2,10 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Database\Factories\UserFactory;
 
-class ToDoFactory extends Factory   
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Todo>
+ */
+class TodoFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -15,8 +18,8 @@ class ToDoFactory extends Factory
     public function definition(): array
     {
         return [
-            "due_date" => fake()->date(),
-            "user_id" => UserFactory::factory(),
+            'date' => $this->faker->date(),
+            'user_id' => User::factory(),
         ];
     }
 }
