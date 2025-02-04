@@ -17,9 +17,11 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory(1)->create();
+        User::factory(10)->create()->each(function ($user) {
+            Todo::factory(5)->create(['user_id' => $user->id])->each(function ($todo) {
+                Task::factory(3)->create(['todo_id' => $todo->id]);
+            });
+        });
 
-        Todo::factory(1)->create();
-        Task::factory(1)->create();
     }
 }

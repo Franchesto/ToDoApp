@@ -1,49 +1,33 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('layouts.app')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        table, th, td {
-            border:1px solid black;
-        }
-    </style>
+@section('content')
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold text-center mb-6">📝 To-Do List</h1>
 
-    <title>
-        Todo List
-    </title>
-
-</head>
-<body>
-
-    <div>
-        <h1>ToDo List</h1>
-    </div>
-    <table class="table" style="width:100%">
-        @foreach ($todos as $todo)
-        <thead>
-            <tr>
-                <th>Tasks</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-
-        <tbody>
-
-            @foreach ($todo->tasks as $task)
-                <tr>
-                    <td>{{ $task->title }}</td>
-                    <td>{{ $task->description }}</td>
-                    <td>{{ $task->status }}</td>
-                    <td>{{ $todo->date }}</td>
-                </tr>
+        <!-- Grid Layout -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            @foreach ($todos as $todo)
+                <div class="bg-yellow-300 p-4 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-bold">{{date('d/m', strtotime($todo->date)) }}</h2>
+                    <table class="table-auto">
+                        <thead>
+                            <tr>
+                                <th>Task</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        @foreach ($todo->tasks as $task)
+                            <tbody>
+                                <tr>
+                                    <td>✅ {{ $task->title }}</td>
+                                    <td><span class="font-semibold">{{ ucfirst($task->status) }}</span></td>
+                                </tr>
+                            </tbody>
+                        @endforeach
+                    </table>
+                </div>
             @endforeach
-        </tbody>
-        @endforeach
-    </table>
-
-</body>
-</html>
+            <a href="{{ route("todos.create") }}"> </a>
+        </div>
+    </div>
+@endsection
