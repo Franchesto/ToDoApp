@@ -13,6 +13,10 @@ class TodoController extends Controller
 {
     public function index()
     {
+        if(Auth::user() == null){
+            return view('auth.login');
+        }
+
         $todos =  Auth::user()->todos()->with('tasks')->get();
 
         return View('todo.index', compact('todos'));
